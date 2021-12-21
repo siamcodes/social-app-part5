@@ -13,7 +13,8 @@ import PostScreen from './screens/PostScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import RegisterScreen from './screens/RegisterScreen'
 
-import firebase from "firebase";
+import firebase from "firebase/app";
+
 var firebaseConfig = {
   apiKey: "AIzaSyD0veqUiz-Hn1ssSgtw4uDwx0-CNKlcwo0",
   authDomain: "app-ch3-27bc3.firebaseapp.com",
@@ -31,7 +32,7 @@ const AppTabNavigator = createBottomTabNavigator({
    Home:{
      screen: HomeScreen,
      navigationOptions: {
-       tabBarIcon:({tintColor}) => <Ionicons name="ios-home" size={24} color={tintColor} /> 
+       tabBarIcon:({tintColor}) => <Ionicons name="home-outline" size={24} color={tintColor} /> 
      }
    },
    Message:{
@@ -43,7 +44,7 @@ const AppTabNavigator = createBottomTabNavigator({
   Post:{
     screen: PostScreen,
     navigationOptions: {
-      tabBarIcon:({tintColor}) => <Ionicons name="md-add-circle-sharp" size={40} color={tintColor} />
+      tabBarIcon:({tintColor}) => <Ionicons name="ios-add-circle-sharp" size={40} color={tintColor} />
     }
   },
   Notification:{
@@ -55,10 +56,19 @@ const AppTabNavigator = createBottomTabNavigator({
   Profile:{
     screen: ProfileScreen,
     navigationOptions: {
-      tabBarIcon:({tintColor}) => <Ionicons name="person" size={24} color={tintColor} />
+      tabBarIcon:({tintColor}) => <Ionicons name="person-outline" size={24} color={tintColor} />
     }
+  },
+  
+},
+{
+  tabBarOptions: {
+    activeTintColor: "#161F3D",
+    inactiveTintColor: "#88888C4",
+    showLabel: true
   }
-})
+}
+)
 
 /*
 const AppStack = createStackNavigator({

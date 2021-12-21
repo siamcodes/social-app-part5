@@ -1,30 +1,53 @@
 import firebase from "firebase";
+require("firebase/firestore");
 
-class Fire{
+class Fire {
 
-    uploadPhotoAsync = (uri, filename)=> {
+    addPost = async ({ text, localUri }) => {
+        //const remoteUri = await this.uploadPhotoAsync(localUri);
+        const remoteUri = await this.uploadPhotoAsync(localUri, `photos/${this.uid}/${Date.now()}`);
+
+        return new Promise((res, rej) => {
+            this.firestore
+                .collection("posts")
+                .add({
+                    text,
+                    uid: this.uid,
+                    timestamp: this.timestamp,
+                    image: remoteUri
+                })
+                .then(ref => {
+                    res(ref);
+                })
+                .catch(error => {
+                    rej(error);
+                });
+        });
+    };
+
+    uploadPhotoAsync = (uri, filename) => {
         // const path = `photos/${this.uid}/${Date.now()}.jpg`;
-         return new Promise(async (res, rej) => {
-             const response = await fetch(uri);
-             const file = await response.blob();
-             let upload = firebase
-                 .storage()
-                 .ref(filename)
-                 .put(file);
-             upload.on(
-                 "state_changed",
-                 snapshot => {},
-                 err => {
-                     rej(err);
-                 },
-                 async () => {
-                     const url = await upload.snapshot.ref.getDownloadURL();
-                     res(url);
-                 }
-             );
-         });
-     };
-   
+        return new Promise(async (res, rej) => {
+            const response = await fetch(uri);
+            const file = await response.blob();
+            let upload = firebase
+                .storage()
+                .ref(filename)
+                .put(file);
+            upload.on(
+                "state_changed",
+                snapshot => { },
+                err => {
+                    rej(err);
+                },
+                async () => {
+                    const url = await upload.snapshot.ref.getDownloadURL();
+                    res(url);
+                }
+            );
+        });
+    };
+
     createUser = async user => {
         let remoteUri = null;
         try {

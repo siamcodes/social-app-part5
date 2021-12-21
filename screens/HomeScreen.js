@@ -18,7 +18,7 @@ export default class HomeScreen extends Component {
         return (
             <View style={styles.container}>
                 <View>
-                    <Text> สวัสดี {this.state.displayName} </Text>
+                    <Text> Welcome  {this.state.displayName} </Text>
                     <Text>{this.state.email}</Text>
                 </View>
 
